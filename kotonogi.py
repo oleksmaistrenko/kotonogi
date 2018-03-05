@@ -11,6 +11,8 @@ from telegram.ext import MessageHandler, Filters, CallbackQueryHandler, Updater,
 
 import lametric
 
+import audio
+
 # Enable logging
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
                     level=logging.INFO)
@@ -26,9 +28,18 @@ def error(bot, update, error):
 # handle all requests
 def process_update(bot, update):
     logger.info(update)
+    message = update.message.text
     if update.message.from_user.username in ['oleksm', 'TaisNik']:
-        update.message.reply_text(text='sending a notification to lametric')
-        lametric.send_notification_with_cat_sound(update.message.text)
+        if message.startswith('youtube'):
+            if message.split()[1] != 'stop':
+                update.message.reply_text(text='starting playing youtube song soon')
+                audio.download_and_play_youtube(message)
+            else:
+                update.message.reply_text(text='silence')
+                audio.stop_player()
+        else:
+            update.message.reply_text(text='sending a notification to lametric')
+            lametric.send_notification_with_cat_sound(message)
     else:
         update.message.reply_text(text='you have nothing to do here ^_^')
 
