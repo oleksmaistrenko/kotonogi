@@ -33,7 +33,7 @@ def process_update(bot, update):
         if message.startswith('youtube'):
             if message.split()[1] != 'stop':
                 update.message.reply_text(text='starting playing youtube song soon')
-                audio.download_and_play_youtube(message)
+                audio.download_and_play_youtube(message.split()[1])
             else:
                 update.message.reply_text(text='silence')
                 audio.stop_player()
