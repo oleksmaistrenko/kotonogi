@@ -8,7 +8,7 @@ import json
 import time
 
 """ this parameter contains a lametric password """
-lametric_pass = None
+from settings import lametric_pass
 
 headers = {'Content-Type': 'application/json'}
 URL = 'http://192.168.1.155:8080/api/v2/{}'
@@ -29,6 +29,11 @@ def send_notification(text):
     data = {'model': {'frames': [{'text': text}], 'sound': {'category': 'notifications', 'id': 'cat', 'repeat': 1}}}
     requests.post(url=URL.format('device/notifications'), data=json.dumps(data), auth=('dev', lametric_pass),
                   headers=headers)
+
+
+def set_timer(duration):
+    # TODO implement
+    pass
 
 
 def get_volume():

@@ -3,8 +3,10 @@
 #
 # fetching music from youtube
 #
-import pafy
 import subprocess
+import pafy
+
+from settings import bluetooth_audio
 
 player = None
 
@@ -14,7 +16,7 @@ def download_and_play_youtube(video_id):
     global player
     youtube_video = pafy.new(video_id)
     url = youtube_video.getbestaudio().url
-    player = subprocess.Popen(['mplayer', '-ao', 'pulse::bluez_sink.A0_2C_36_77_25_96.a2dp_sink', '-volume', '50', url],
+    player = subprocess.Popen(['mplayer', '-ao', bluetooth_audio, '-volume', '50', url],
                               stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
 
